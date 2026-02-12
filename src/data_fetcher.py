@@ -89,6 +89,12 @@ def fetch_macro_data(
     for name, fred_id in FRED_SERIES.items():
         series[name] = fred.get_series(fred_id, observation_start=start_date)
 
+    # Compute CPI YoY on the raw monthly series BEFORE combining
+    # (pct_change(12) on monthly data = 12-month lookback = year-over-year)
+    if "cpi" in series:
+        cpi_monthly = series["cpi"].dropna()
+        series["cpi_yoy"] = cpi_monthly.pct_change(periods=12) * 100
+
     macro = pd.DataFrame(series)
     macro.index = pd.to_datetime(macro.index)
     macro.index.name = "date"
@@ -96,10 +102,6 @@ def fetch_macro_data(
     # GDP is quarterly — interpolate to monthly first
     if "gdp_growth" in macro.columns:
         macro["gdp_growth"] = macro["gdp_growth"].interpolate(method="linear")
-
-    # Compute CPI year-over-year change (%)
-    if "cpi" in macro.columns:
-        macro["cpi_yoy"] = macro["cpi"].pct_change(periods=12) * 100
 
     # Resample to daily and forward-fill (FRED data is monthly/daily mix)
     macro = macro.resample("D").ffill()
