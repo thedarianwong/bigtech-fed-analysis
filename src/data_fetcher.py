@@ -104,7 +104,7 @@ def fetch_macro_data(
         macro["gdp_growth"] = macro["gdp_growth"].interpolate(method="linear")
 
     # Resample to daily and forward-fill (FRED data is monthly/daily mix)
-    macro = macro.resample("D").ffill()
+    macro = macro.resample("D").asfreq().ffill()
 
     return macro
 

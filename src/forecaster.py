@@ -132,7 +132,7 @@ def generate_forecast(
 
     Returns DataFrame with: ds, yhat, yhat_lower, yhat_upper, and scenario label.
     """
-    future = model.make_future_dataframe(periods=periods)
+    future = model.make_future_dataframe(periods=periods, freq='B')
     future = _build_future_regressors(df, future, regressors, scenario, hike_bps)
 
     forecast = model.predict(future)
