@@ -1,5 +1,7 @@
 # Big Tech Under Pressure
 
+![IMG_9764](https://github.com/user-attachments/assets/278f77d4-ce50-4777-ad14-932d648e9bb4)
+
 **How Federal Reserve Rate Decisions Impact the Magnificent 7**
 
 > "When the Fed raises rates, which Big Tech stocks suffer most — and can we predict the next drop using historical macro patterns?"
